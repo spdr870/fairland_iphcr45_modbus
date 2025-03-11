@@ -1,0 +1,89 @@
+views:
+  - type: sections
+    max_columns: 4
+    title: Pool
+    path: pool
+    sections:
+      - type: grid
+        cards:
+          - type: entities
+            entities:
+              - entity: binary_sensor.fairland_zwembad_e3_status
+                name: No flow protection
+                secondary_info: last-updated
+                icon: mdi:water
+            visibility:
+              - condition: state
+                entity: binary_sensor.fairland_zwembad_malfunction_status
+                state: 'on'
+            state_color: true
+          - show_name: false
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.heat_kas_pool_circulation_pump_socket_1
+            grid_options:
+              columns: 3
+              rows: 2
+          - show_name: false
+            show_icon: true
+            type: button
+            tap_action:
+              action: toggle
+            entity: switch.zwembad_wpu_aan_uit_schakelaar
+            grid_options:
+              columns: 3
+              rows: 1
+            show_state: true
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: perform-action
+              perform_action: script.script_fairland_wpu_on_supersilent_30
+              target: {}
+            entity: sensor.fairland_zwembad_wpu_compressor_percent
+            show_state: true
+            name: SS/30C
+            grid_options:
+              columns: 3
+              rows: 2
+            icon: mdi:speedometer-slow
+          - show_name: true
+            show_icon: true
+            type: button
+            tap_action:
+              action: perform-action
+              perform_action: script.script_fairland_wpu_on_silent_30
+              target: {}
+            entity: sensor.fairland_zwembad_wpu_compressor_percent
+            show_state: true
+            name: S/30C
+            grid_options:
+              columns: 3
+              rows: 2
+            icon: mdi:speedometer-medium
+          - features:
+              - type: climate-hvac-modes
+              - style: icons
+                type: climate-fan-modes
+            type: thermostat
+            entity: climate.pool_climate
+            grid_options:
+              columns: 12
+              rows: 8
+          - type: entities
+            entities:
+              - entity: sensor.fairland_zwembad_wpu_temp_outlet
+                name: Outlet
+              - entity: sensor.fairland_zwembad_wpu_ambient_temp
+                name: Ambient
+              - entity: sensor.fairland_zwembad_wpu_compressor_percent
+                icon: mdi:fan
+                secondary_info: none
+                name: Compressor
+              - entity: sensor.fairland_zwembad_wpu_compressor_amp
+              - entity: sensor.fairland_zwembad_wpu_pfc_volt
+            state_color: false
+            show_header_toggle: true

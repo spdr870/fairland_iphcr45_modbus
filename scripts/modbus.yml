@@ -1,0 +1,116 @@
+- name: waveshare1
+  type: tcp
+  host: 192.168.178.200
+  port: 4196
+  delay: 2
+  timeout: 5
+  binary_sensors:
+    - name: "Fairland Pool WPU Status"
+      unique_id: "fairland_wpu_status"
+      address: 0
+      scan_interval: 10
+      slave: 1
+    - name: "Fairland Pool Malfunction Status"
+      unique_id: "fairland_wpu_mal"
+      address: 16
+      scan_interval: 10
+      slave: 1
+      input_type: discrete_input
+    - name: "Fairland Pool E3 Status"
+      unique_id: "fairland_wpu_e3"
+      address: 51
+      scan_interval: 10
+      slave: 1
+      input_type: discrete_input
+  switches:
+    - name: Fairland Pool WPU On/Off Switch
+      unique_id: "fairland_wpu_switch_onof"
+      slave: 1
+      address: 0
+      command_on: 1
+      command_off: 0
+      write_type: coil
+      verify:
+          input_type: coil
+          address: 0
+          delay: 1
+          state_on: 1
+          state_off: 0
+  climates:
+    - name: "Fairland Pool Climate"
+      unique_id: "fairland_climate"
+      address: 3
+      precision: 2
+      temp_step: 1
+      min_temp: 18
+      max_temp: 32
+      input_type: input
+      scale: 0.5
+      offset: -30
+      target_temp_register: 3
+      scan_interval: 10
+      hvac_mode_register:
+        address: 0
+        values:
+          state_heat: 1
+          state_cool: 2
+          state_auto: 0
+      fan_mode_register:
+        address: 1
+        values:
+          state_fan_low: 2
+          state_fan_medium: 1
+          state_fan_high: 0
+  sensors:
+    - name: "Fairland Pool WPU Compressor Percent"
+      unique_id: "fairland_wpu_compressor_percent"
+      address: 0
+      scan_interval: 10
+      slave: 1
+      input_type: input
+      state_class: "measurement"
+      unit_of_measurement: "%"
+    - name: "Fairland Pool WPU Temp Outlet"
+      unique_id: "fairland_wpu_water_outlet_temp"
+      address: 4
+      scan_interval: 10
+      slave: 1
+      input_type: input
+      precision: 1
+      offset: -30
+      scale: 0.5
+      state_class: "measurement"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
+    - name: "Fairland Pool WPU Compressor Amp "
+      unique_id: "fairland_wpu_compressor_amp"
+      address: 11
+      scan_interval: 10
+      slave: 1
+      input_type: input
+      scale: 0.1
+      precision: 2
+      state_class: "measurement"
+      device_class: "current"
+      unit_of_measurement: "A"
+    - name: "Fairland Pool WPU PFC Volt "
+      unique_id: "fairland_wpu_pfc_volt"
+      address: 2
+      scan_interval: 10
+      slave: 1
+      input_type: input
+      state_class: "measurement"
+      device_class: "voltage"
+      unit_of_measurement: "V"
+    - name: "Fairland Pool WPU Ambient Temp"
+      unique_id: "fairland_wpu_ambient_temp"
+      address: 5
+      scan_interval: 10
+      slave: 1
+      input_type: input
+      precision: 1
+      offset: -30
+      scale: 0.5
+      state_class: "measurement"
+      device_class: "temperature"
+      unit_of_measurement: "°C"
